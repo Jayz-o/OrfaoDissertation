@@ -1,0 +1,7 @@
+source /home/jarred/Documents/virtual_envs/Orfao_Masters/bin/activate
+
+export PYTHONPATH="${PYTHONPATH}:/home/jarred/Documents/Orfao_Masters"
+
+cd /home/jarred/Documents/Orfao_Masters/DatasetProcessing/KeyFrameExtraction
+
+python ray_siw_kf_creator.py

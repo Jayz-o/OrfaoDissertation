@@ -1,0 +1,7 @@
+fid,cumulative_kimg,model,fake_image,directory,kimg,fake_image_path
+84.5365488502262,4560,network-snapshot-000000.pkl,fakes000000.png,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32,0,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32/fakes000000.png
+85.4748499375708,4640,network-snapshot-000080.pkl,fakes000080.png,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32,80,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32/fakes000080.png
+90.4101840434713,4720,network-snapshot-000160.pkl,fakes000160.png,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32,160,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32/fakes000160.png
+88.9816389749686,4800,network-snapshot-000240.pkl,fakes000240.png,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32,240,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32/fakes000240.png
+102.24448524044371,4880,network-snapshot-000320.pkl,fakes000320.png,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32,320,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32/fakes000320.png
+83.76886928584287,4960,network-snapshot-000400.pkl,fakes000400.png,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32,400,00006-stylegan3-r-SGS8-gpus4-batch32-gamma32/fakes000400.png
