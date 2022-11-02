@@ -1,4 +1,3 @@
-#conda install -c pytorch faiss-gpu
 Keras-Applications
 click>=8.0
 cvlib~=0.2.7

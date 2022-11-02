@@ -137,15 +137,6 @@ def create_dataset(dataset_root, save_root, dataset_csv_name, video_name_pattern
 
     print("~~~~~~~~~~~~~~~~~~ PASS 1: Face Detection ~~~~~~~~~~~~~~~~~~")
     if len(video_files_remaining) > 0:
-        # begin_processing({
-        #     "video_path": "/home/jarred/Documents/Datasets/SIW_ERROR_Videos/Train/020-2-3-3-2.mov",
-        #     "save_root": save_root,
-        #     "csv_name": VIDEO_CSV_NAME,
-        #     "verbose": verbose,
-        #     "detect_video_face_func": detect_video_face_func,
-        #     "produce_info_csv_func": produce_info_csv_func,
-        # })
-        # create the tune config
         tune_config = {
             "video_path": tune.grid_search(video_files_remaining),
             "save_root": save_root,

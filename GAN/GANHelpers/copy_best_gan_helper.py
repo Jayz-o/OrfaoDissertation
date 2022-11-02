@@ -16,7 +16,7 @@ def copy_best_to_folder(source_root, destination_root, convert_category_to_gt_fu
     metric_file_name = "metric-fid50k_full.jsonl"
     metrics = list(set(obtain_file_paths(source_root, metric_file_name)))
     metrics.sort()
-    best_dic = dict()
+
     frames = []
     last_kimg = 0
     for metric in metrics:

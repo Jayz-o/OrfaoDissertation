@@ -74,15 +74,6 @@ if __name__ == "__main__":
         all_videos = None #df.sort_values('frames_present', ascending=True)['directory_path'].tolist()
     # all_videos = df.sort_values('frames_present', ascending=False)['directory_path'].tolist()
 
-
-    # all_videos = df.query("usage_type == 'test' and subject_number == 90")['directory_path'].tolist()
-    # all_videos = ["train/spoof/140/140-2-3-3-1"]
-    #
-    # files = obtain_file_paths("/home/jarred/Documents/Datasets/SIW_KF/ERROR_10", r"^ERROR")
-    # #'/home/jarred/Documents/Datasets/SIW_KF/ERROR_10/ERROR_FINDING_OPTIMAL_K_train_real_165_165-2-1-2-2.txt'
-    # all_videos = [os.path.join(*os.path.basename(file).split(".")[0].split("_")[4:]) for file in files]
-    # all_videos = [all_videos[0]]
-
     create_kf_dataset(dataset_root, save_root, tune_root, DATASET_CSV_NAME, mean_col_name, min_thresh_function, tune_extraction_gpu,
                       tune_extraction_cpu, must_redo_feature_extraction,
                       must_use_separate_extraction_process,

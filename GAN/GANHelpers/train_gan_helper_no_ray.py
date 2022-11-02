@@ -1,6 +1,7 @@
 import os.path
 from datetime import datetime
 
+from ray import tune
 
 from Helpers.image_helper import obtain_file_paths
 from NVIDIA_STYLEGAN3.train import main
@@ -59,8 +60,6 @@ def train_gan(project_root, dataset_name, training_folder_name, duration_kimg, n
         if len(existing_dirs) > 0:
             #     run from the last directory
             existing_dirs.sort(reverse=True)
-            interested_files = None
-            interested_dir = None
             kimg_remaining = duration_kimg
             latest_pickle = None
             for dir in existing_dirs:
@@ -103,20 +102,20 @@ def ray_train_gan(dataset_name, project_root, attack_folders, duration_kimg, num
     tune_kf_csv = f"{dataset_name}_gan_training.csv"
     tune_experiment_name = f"{dataset_name}_gan_training_{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}"
     if is_ray:
-        # tune_config = {
-        #     "training_folder_name": tune.grid_search(attack_folders),
-        #     "dataset_name": dataset_name,
-        #     "duration_kimg": duration_kimg,
-        #     "num_gpus": num_stylegan_gpu,
-        #     "project_root": project_root
-        # }
-        #
-        # analysis = tune.run(begin_training_gan, config=tune_config, local_dir=tune_root, name=tune_experiment_name,
-        #                     resources_per_trial={"cpu": tune_cpu, "gpu": tune_gpu}, resume="AUTO")
-        #                     # resources_per_trial={"cpu": 2.0, "gpu": 1.0}, resume="AUTO")
-        # df = analysis.results_df
-        # df.to_csv(os.path.join(tune_root, tune_kf_csv))
-        pass
+        tune_config = {
+            "training_folder_name": tune.grid_search(attack_folders),
+            "dataset_name": dataset_name,
+            "duration_kimg": duration_kimg,
+            "num_gpus": num_stylegan_gpu,
+            "project_root": project_root
+        }
+
+        analysis = tune.run(begin_training_gan, config=tune_config, local_dir=tune_root, name=tune_experiment_name,
+                            resources_per_trial={"cpu": tune_cpu, "gpu": tune_gpu}, resume="AUTO")
+                            # resources_per_trial={"cpu": 2.0, "gpu": 1.0}, resume="AUTO")
+        df = analysis.results_df
+        df.to_csv(os.path.join(tune_root, tune_kf_csv))
+
     else:
         for folder in attack_folders:
             begin_training_gan( {

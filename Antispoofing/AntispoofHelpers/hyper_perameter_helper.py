@@ -233,17 +233,6 @@ def antispoof(config):
         fold_train_frame.to_csv(f"{save_metrics_root}/fold_{fold_index}_train_frame.csv", index=False)
         fold_val_frame.to_csv(f"{save_metrics_root}/fold_{fold_index}_val_frame.csv", index=False)
     test_split(fold_train_frame, fold_val_frame, X_COL)
-    # balance classes
-    # res_x, res_y = train_frame.iloc[:, [0,2], train_frame.iloc[:, 1]
-    # oversample = RandomOverSampler(random_state=None)
-    # res_x, res_y = oversample.fit_resample(res_x, res_y)
-    # print(Counter(res_y))
-    # visualise
-    # counter = Counter(train_frame["info"])
-    # plt.bar(counter.keys(), counter.values())
-    # plt.show()
-    # sns.countplot(temp_frame["info"])
-    # plt.show()
     train_generator, valid_generator = get_train_validation_generator(fold_train_frame, fold_val_frame, use_hsv=use_hsv)
 
     # create the model
@@ -255,6 +244,7 @@ def antispoof(config):
 
     model.compile(optimizer=optimiser, loss=tf.keras.losses.CategoricalCrossentropy(label_smoothing=0.2),
                   metrics=['accuracy'])
+    # For future work
     # reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(monitor = 'val_accuracy',
     #                                                  factor = 0.2,
     #                                                  patience = 2,
@@ -281,7 +271,6 @@ def antispoof(config):
 
     train_step_size = train_generator.n // train_generator.batch_size
     validation_step_size = valid_generator.n // valid_generator.batch_size
-    # STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
     history = model.fit(x=train_generator,
                         steps_per_epoch=train_step_size,
                         validation_data=valid_generator,
@@ -372,11 +361,6 @@ def start_antispoofing(dataset_root, dataset_csv_name, aug_root, aug_csv, save_m
 
     tune_antispoof_csv = f"{dataset_name}_antispoof_tune.csv"
 
-    # if is_traditional:
-    #     training_type = "TraditionalAugmentation"
-    # else:
-    #     # training_type = "GeneratedTraditionalAugmentation"
-    #     training_type = "GeneratedAugmentation"
     training_type = ""
     if is_single_folder:
         training_type += "Single"

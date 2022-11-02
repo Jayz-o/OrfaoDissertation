@@ -3,9 +3,12 @@ import os
 import shutil
 
 from Antispoofing.AntispoofHelpers.spoof_metric import determine_spoof_metrics
-from DatasetProcessing.DatasetCreators.FaceHelpers.face_detection_helper import detect_face_in_video
 from Helpers.image_helper import obtain_file_paths
 from tqdm.auto import tqdm
+
+from constants import PROJECT_ROOT, ANTISPOOFING_SAVED_FOLDER_NAME
+
+
 def combined_metrics(df):
     return df.groupby(['protocol_number', 'when_aug_performed' , 'aug_type','config/HP_AUG_PER']).mean()
 
@@ -56,14 +59,12 @@ def video_based_results(csv_file_path, protocol_name, fold_index,protocol_number
     subjects.sort()
     video_list = []
     window_name = f"all"
-    # try:
+
     for subject_number in subjects:
         for name in video_names:
             single_vid_df = df_predictions.query(f"video_name == '{name}' and subject_number == '{subject_number}'")
             single_copy = single_vid_df.copy()
             single_copy['frame_number'] = single_vid_df.apply(get_only_frames, axis=1)
-            # single_vid_df_copy= single_vid_df.apply(lambda row: get_only_frames(row), axis=0)
-            # single_vid_df_copy= single_vid_df.apply(lambda row: get_only_frames(row), axis=0)
             single_copy = single_copy.sort_values(by='frame_number')
             if window_size is not None:
                 single_copy = single_copy[start_frame:start_frame+window_size]
@@ -92,13 +93,10 @@ def video_based_results(csv_file_path, protocol_name, fold_index,protocol_number
     predicted = multi_frame['predicted'].tolist()
     ground_truth = multi_frame['ground_truth'].tolist()
     metric_dic = determine_spoof_metrics(ground_truth, predicted, protocol_name, fold_index,protocol_number, save_dir= None, must_show=False)
-    # metric_dic = determine_spoof_metrics(ground_truth, predicted, protocol_name, fold_index,protocol_number, save_dir= save_metric_name, must_show=False)
     metric_dic = dict(("{}_{}".format("Multi",k),v) for k,v in metric_dic.items())
-    # except:
-    #     print(csv_file_path)
+
     return metric_dic
-# /home/jarred/Documents/SavedAntispoofing/SIW_90_GenAugNormalAndSpoof/AfterSplit/SpoofMetrics/Single/SIW_antispoof_09_30_2022_13_58_46/A@ASUS-IP7P-IPP2017,A@N_aug_0.1_run_1/0/
-# SIW_90_GenAugNormalAndSpoof/AfterSplit/SpoofMetrics/Single/SIW_antispoof_09_30_2022_13_58_46/A@ASUS-IP7P-IPP2017,A@N_aug_0.1_run_1/0/test_LOO_SGS8_results.csv
+
 def copy_multi_csv_files(antispoof_root, save_folder_path=None, window_size = None, save_metric_name="Test", must_save_metrics=False, start_frame=0, is_casia=True):
     # create the save to folder
     save_folder_name = "MasterMetrics"
@@ -126,7 +124,6 @@ def copy_multi_csv_files(antispoof_root, save_folder_path=None, window_size = No
         path_bits = temp_path.split(os.path.sep)
         folder_name = path_bits[0]
         when_aug = path_bits[1]
-        # SIW_90_GenAugNormalAndSpoof/AfterSplit/SpoofMetrics/Single/SIW_antispoof_09_30_2022_13_58_46/A@ASUS-IP7P-IPP2017,A@N_aug_0.1_run_1/0/test_LOO_SGS8_results.csv
         fold_number = path_bits[-2]
         protocol = path_bits[-1].split(".csv")[0]
         protocol = protocol.split("test_")[1]
@@ -175,8 +172,7 @@ def copy_multi_csv_files(antispoof_root, save_folder_path=None, window_size = No
 
         if not os.path.exists(predictions_folder):
             os.makedirs(predictions_folder)
-        # if os.path.exists(os.path.join(predictions_folder, f"predictions.csv")):
-        #     continue
+
         save_metrics_path = None
         if must_save_metrics:
             save_metrics_path = predictions_folder
@@ -200,8 +196,9 @@ def copy_multi_csv_files(antispoof_root, save_folder_path=None, window_size = No
 
     multi_df = pd.DataFrame.from_dict(multi_metric_list)
     multi_df.to_csv(os.path.join(save_folder_path, f"multi_window_{window_size}.csv"), index=True)
-    # multi_df = pd.read_csv(os.path.join(save_folder_path, "multi_window_30.csv"))
-    selected_multi_df = multi_df[['when_aug_performed', 'aug_type', 'protocol_number', 'protocol', 'config/HP_AUG_PER',  'Multi_TP', 'Multi_TN', 'Multi_FP', 'Multi_FN','Multi_APCER','Multi_BPCER', 'Multi_ACER', "Multi_EER", "Multi_AUC", 'config/HP_REPEAT', 'fold_number']].sort_values(["protocol_number", "config/HP_AUG_PER"])
+    selected_multi_df = multi_df[['when_aug_performed', 'aug_type', 'protocol_number', 'protocol', 'config/HP_AUG_PER',
+                                  'Multi_TP', 'Multi_TN', 'Multi_FP', 'Multi_FN','Multi_APCER','Multi_BPCER',
+                                  'Multi_ACER', "Multi_EER", "Multi_AUC", 'config/HP_REPEAT', 'fold_number']].sort_values(["protocol_number", "config/HP_AUG_PER"])
     df_combined = combined_metrics(selected_multi_df)
     df_combined.to_csv(os.path.join(save_folder_path, f"multi_window_{window_size}_combined.csv"), index=True)
     df_combined_describe = combined_metrics_describe(selected_multi_df)
@@ -209,8 +206,7 @@ def copy_multi_csv_files(antispoof_root, save_folder_path=None, window_size = No
     df_individual = individual_metrics(selected_multi_df)
     df_individual.to_csv(os.path.join(save_folder_path, f"multi_window_{window_size}_individual.csv"), index=True)
 
-# /home/jarred/Documents/SavedAntispoofing/SIW_90_GenAugNormalAndSpoof/AfterSplit/SpoofMetrics/Single/SIW_antispoof_09_30_2022_13_58_46/A@ASUS-IP7P-IPP2017,A@N_aug_0.1_run_1/0/
-# SIW_90_GenAugNormalAndSpoof/AfterSplit/SpoofMetrics/Single/SIW_antispoof_09_30_2022_13_58_46/A@ASUS-IP7P-IPP2017,A@N_aug_0.1_run_1/0/
+
 def copy_csv_files(antispoof_root, save_folder_path=None):
     # create the save to folder
     save_folder_name = "MasterMetrics"
@@ -274,25 +270,37 @@ def copy_csv_files(antispoof_root, save_folder_path=None):
 
 
 if __name__ == '__main__':
-    # windows = [None]
-    windows = [3, 5, 7, 9,10, 11, 15, None]
-    # save_path = "/media/jarred/ssd/SIW_Metrics"
-    save_path = "/home/jarred/Desktop/Metrics/CASIA"
-    save_name = "SIW_Test_"
-    is_casia = False
-    antispoof_root = "/home/jarred/Desktop/SavedAntispoofing/CASIA"
+    is_casia = True
+    windows = [5, 7, 10, 15]
+    saved_antispoofing_root = os.path.join(PROJECT_ROOT, ANTISPOOFING_SAVED_FOLDER_NAME)
 
-    # antispoof_root = "/home/jarred/Documents/SavedAntispoofing/CASIA"
-    # save_path = "/media/jarred/ssd/CASIA_Metrics"
-    # is_casia = True
-    # save_name = "CASIA_Test_"
-    # save_path = "/home/jarred/Dropbox/CASIA_test"
-    # save_path = "/home/jarred/Dropbox/SIW"
-    # for window in windows:
-    #     copy_multi_csv_files(antispoof_root, save_path, window_size=window, save_metric_name=save_name, start_frame=0, must_save_metrics=True, is_casia=is_casia)
-    # antispoof_root = "/home/jarred/Desktop/NewSIWBL/"
-    # save_path = "/home/jarred/Dropbox/SIW"
+    # SiW variables
+    siw_antispoof_root = os.path.join(saved_antispoofing_root, "SIW")
+    siw_save_path = os.path.join(PROJECT_ROOT, "Results", "SIW")
+    siw_name_prefix = "SIW_Test_"
+
+    # CASIA variables
+    casia_antispoof_root = os.path.join(saved_antispoofing_root, "CASIA")
+    casia_save_path = os.path.join(PROJECT_ROOT, "Results", "CASIA")
+    casia_name_prefix = "CASIA_Test_"
+
+
+    if is_casia:
+        antispoof_root = casia_antispoof_root
+        save_path = casia_save_path
+        save_name = casia_name_prefix
+    else:
+        antispoof_root = siw_antispoof_root
+        save_path = siw_save_path
+        save_name = siw_name_prefix
+
+    save_name=None
+    # Window size ablation
+    for window in windows:
+        copy_multi_csv_files(antispoof_root, save_path, window_size=window, save_metric_name=save_name, start_frame=0, must_save_metrics=True, is_casia=is_casia)
+
+    # copy combine the metric files
     copy_csv_files(antispoof_root, save_path)
-    # # antispoof_root = "/home/jarred/Documents/SavedAntispoofing"
-    # save_path = "/home/jarred/Dropbox"
-    # copy_csv_files(antispoof_root, save_path)
+
+
+

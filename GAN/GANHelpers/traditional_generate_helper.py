@@ -226,15 +226,6 @@ def _generate_category(config):
         os.makedirs(save_path)
     info_frame.to_csv(os.path.join(save_path, 'aug_info.csv'), index=False)
 
-# def casia_num_train_images_func(dataset_root, dataset_csv, folder_name, subject_number):
-#     categories = [folder_name]#folder_name.split("|")
-#     dataset_frame = pd.read_csv(os.path.join(dataset_root, dataset_csv))
-#     if subject_number is None:
-#         dataset_frame = dataset_frame.query("usage_type == 'train'")
-#     else:
-#         dataset_frame = dataset_frame.query(f"subject_number == {subject_number}")
-#     category_frame = make_attack_category_frame(dataset_frame, categories)
-#     return category_frame['frames_present'].sum()
 def casia_num_train_images_func(dataset_root, dataset_csv, folder_name, subject_number, must_return_frame=True):
     categories = [folder_name]#folder_name.split("|")
     dataset_frame = pd.read_csv(os.path.join(dataset_root, dataset_csv))
@@ -255,7 +246,7 @@ def casia_num_train_images_func(dataset_root, dataset_csv, folder_name, subject_
     category_frame = make_attack_category_frame(dataset_frame, categories)
 
     combined_categories_frame = make_attack_category_frame(dataset_frame, combined_categories)
- #
+
     if must_return_frame:
         return combined_categories_frame['frames_present'].sum(), category_frame
     else:

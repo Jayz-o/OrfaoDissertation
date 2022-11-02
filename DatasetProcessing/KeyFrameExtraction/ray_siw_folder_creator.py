@@ -1,19 +1,13 @@
 import os
 
-import numpy as np
-
-from Helpers.image_helper import obtain_file_paths
-
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
-import pandas as pd
 
 from DatasetProcessing.DatasetCreators.SIWCreator.ray_siw_dataset_creator import DATASET_CSV_NAME
 
 import os.path
 import shutil
 
-import keras_vggface.utils
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
@@ -54,16 +48,6 @@ def get_category_mean_dic(save_root, dataset_name, mean_col, use_only_training_i
     # only use training set information
     if use_only_training_information:
         dataset_frame = dataset_frame.query("usage_type == train")
-    # categories = dataset_frame[mean_col].unique()
-    # frames = []
-    # for category in categories:
-    #     category_frame = dataset_frame.query(f"{mean_col} == '{category}'")
-    #     copy = category_frame.copy()
-    #     copy["optimal_k"] = category_frame.apply(lambda x: find_max_k(save_root, x['directory_path'], pickle_name),
-    #                                              axis=1)
-    #     frames.append(copy)
-    # frame = pd.concat(frames)
-    # frame.to_csv(save_root, index=False)
     metrics = dataset_frame.groupby([mean_col])
     metric_frame = metrics.describe()
 
@@ -268,38 +252,6 @@ def get_sil_for_k_tf(k, feature_array):
         return -1, -1, -1
     return k, score, cluster_centers
 
-# kmeans pytorch
-# def get_sil_for_k_tf(k, feature_array):
-#     try:
-#         import torch
-#         from kmeans_pytorch import kmeans
-#         print(k)
-#         labels, cluster_centers  = kmeans(torch.from_numpy(feature_array), num_clusters=k, device=torch.device('cuda:0'))
-#         score = silhouette_score(feature_array, labels, metric='euclidean')
-#
-#         del kmeans
-#         del labels
-#     except Exception as e:
-#         print(e)
-#         return -1, -1, -1
-#     return k, score, cluster_centers
-
-
-# def get_sil_for_k_tf(k, feature_array):
-#     try:
-#         initialise_tf()
-#         from kmeanstf import TunnelKMeansTF
-#         print(k)
-#         kmeans = TunnelKMeansTF(n_clusters=k).fit(feature_array)
-#         labels = kmeans.labels_
-#         score = silhouette_score(feature_array, labels, metric='euclidean')
-#         centroids = kmeans.cluster_centers_
-#         del kmeans
-#         del labels
-#     except Exception as e:
-#         print(e)
-#         return -1, -1, -1
-#     return k, score, centroids
 
 
 @processify
@@ -348,12 +300,6 @@ def determine_optimal_k(path_feature_dic, max_k=None, k_vs_silscore_save_path=No
     """
 
     # test if the silhouette score has already been done
-    # k_vs_sil_save_path = os.path.join(k_vs_silscore_save_path, K_VS_SIL_PKL)
-    # if force_redo == False and os.path.exists(k_vs_sil_save_path):
-    #     with open(k_vs_sil_save_path, "rb") as file:
-    #         k_vs_sil = pickle.load(file)
-    #         ks = k_vs_sil[0]
-    #         sils = k_vs_sil[1]
     print(f"Working with: {k_vs_silscore_save_path}")
     # create the directories for saving
     if k_vs_silscore_save_path is not None:
@@ -805,40 +751,6 @@ def create_kf_dataset(dataset_root, save_root, tune_root, dataset_csv_name, mean
 
     else:
         video_files_remaining = all_video_files
-    # video_files_remaining = all_video_files
-
-    # if len(video_files_remaining) > 0:
-    #     category_mean_dic = get_category_mean_dic(save_root, dataset_name, mean_col_name, use_only_training_information)
-    #     if is_ray:
-    #         tune_kf_config = {
-    #             'frame_directory': tune.grid_search(video_files_remaining),
-    #             'save_root': save_root,
-    #             'force_redo': must_redo_kf_extraction,
-    #             'must_use_gpu': must_use_gpu,
-    #             'category_mean_dic': category_mean_dic,
-    #             'category_col': mean_col_name,
-    #             'min_thresh_function': min_thresh_function,
-    #         }
-    #
-    #
-    #         # start ray tune
-    #         analysis = tune.run(find_mean_optimal_keyframes, config=tune_kf_config, local_dir=tune_root, name=tune_extract_kf_experiment_name,
-    #                             resources_per_trial={"cpu": tune_kf_cpu, "gpu": tune_kf_gpu}, resume="AUTO")
-    #                             # resources_per_trial={"cpu": tune_kf_cpu, "gpu": tune_kf_gpu}, resume="ERRORED_ONLY")
-    #         df = analysis.results_df
-    #         df.to_csv(os.path.join(tune_root, tune_extract_kf_csv))
-    #     else:
-    #         for file in video_files_remaining:
-    #             find_mean_optimal_keyframes({
-    #                 'frame_directory': file,
-    #                 'save_root': save_root,
-    #                 'force_redo': must_redo_kf_extraction,
-    #                 'must_use_gpu': must_use_gpu,
-    #                 'category_mean_dic': category_mean_dic,
-    #                 'category_col': mean_col_name,
-    #                 'min_thresh_function': min_thresh_function,
-    #
-    #             })
 
     print("~~~~~~~~~~~~~~~~~~ PASS 5: CSV Aggregation ~~~~~~~~~~~~~~~~~~")
     # loop through directories and get all csv files

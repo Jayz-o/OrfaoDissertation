@@ -1,6 +1,5 @@
 import os.path
 import cv2
-import matplotlib.pyplot as plt
 
 from DatasetProcessing.DatasetCreators.FaceHelpers.face_align_helper import FaceAligner
 from Helpers.image_helper import create_image_grid, obtain_file_paths, load_image_from_file

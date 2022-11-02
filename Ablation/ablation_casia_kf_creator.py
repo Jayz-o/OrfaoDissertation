@@ -14,10 +14,6 @@ if __name__ == "__main__":
     # dataset root is the path to the siw dataset containing the extracted face frames
     dataset_root = "/home/jarred/Documents/Datasets/CASIA"
 
-
-
-
-
     # place the tune directory by the saved dataset directory
     dataset_name = os.path.splitext(DATASET_CSV_NAME)[0]
     save_root_pred = os.path.dirname(save_root)
@@ -45,12 +41,12 @@ if __name__ == "__main__":
 
     grid_name = f"S{subject}_V{video}_k{min_kf_threshold}_grid.png"
     title = f"Subject {subject} {CASIA_VIDEO_TO_ATTACK_CATEGORY_DIC[video+'.avi']} Min K = {min_kf_threshold}"
-    # create_kf_dataset(dataset_root, save_root, tune_root, DATASET_CSV_NAME, tune_extraction_gpu,
-    #                   tune_extraction_cpu, must_redo_feature_extraction,
-    #                   must_use_separate_extraction_process,
-    #                   tune_kf_gpu, tune_kf_cpu, must_redo_kf_extraction, must_use_gpu,
-    #                   min_kf_threshold, max_k, enable_early_stop, early_stop_check_k,
-    #                   must_use_separate_kf_process, all_video_files=[folder_name])#all_video_files[:1])
+    create_kf_dataset(dataset_root, save_root, tune_root, DATASET_CSV_NAME, tune_extraction_gpu,
+                      tune_extraction_cpu, must_redo_feature_extraction,
+                      must_use_separate_extraction_process,
+                      tune_kf_gpu, tune_kf_cpu, must_redo_kf_extraction, must_use_gpu,
+                      min_kf_threshold, max_k, enable_early_stop, early_stop_check_k,
+                      must_use_separate_kf_process, all_video_files=[folder_name])#all_video_files[:1])
     save_location = os.path.join(save_root, folder_name)
     look_location = os.path.join(dataset_root, folder_name)
     view_frames_for_folder(look_location, os.path.join(save_location, grid_name), None, 8)

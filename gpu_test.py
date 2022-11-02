@@ -1,10 +1,5 @@
 import tensorflow as tf
-import os
-# os.environ["CUDA_VISIBLE_DEVICES"]="1"
-import cv2
-import torch
 from tensorflow.keras import datasets, layers, models
-import matplotlib.pyplot as plt
 import constants
 print(constants.DOCUMENTS)
 def main():

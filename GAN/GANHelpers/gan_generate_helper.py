@@ -167,9 +167,7 @@ def _generate_category(config):
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     info_frame.to_csv(os.path.join(save_path, 'aug_info.csv'), index=False)
-    # with open(os.path.join(save_path, "error_frames.txt"), 'a') as file:
-    #     for error in error_frames:
-    #         file.write(f"{error}\n")
+
 def casia_num_train_images_func(dataset_root, dataset_csv, folder_name, subject_number):
     categories = [folder_name]#folder_name.split("|")
     dataset_frame = pd.read_csv(os.path.join(dataset_root, dataset_csv))

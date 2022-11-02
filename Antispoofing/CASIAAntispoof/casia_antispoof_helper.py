@@ -3,11 +3,8 @@ import shutil
 
 import pandas as pd
 
-from Antispoofing.AntispoofHelpers.dataset_helper import make_attack_category_frame, get_dataframe_by_usage_type, \
-    get_file_path_ground_truth_frame, get_dataframe_by_attack_category
+from Antispoofing.AntispoofHelpers.dataset_helper import make_attack_category_frame
 from DatasetProcessing.DatasetCreators.CASIACreator.casia_helper import convert_attack_category_to_medium_list
-from Helpers.image_helper import obtain_file_paths
-from NVIDIA_STYLEGAN3.dataset_tool import convert_dataset
 
 LOW_QUALITY_CATEGORIES = ['N1', 'R1', 'W1', 'C1']
 NORMAL_QUALITY_CATEGORIES = ['N2', 'R2', 'W2', 'C2']
@@ -33,8 +30,7 @@ def get_train_casia_frame_func(dataset_root, dataset_csv_name, combinations, tra
         frame = frame.query("usage_type == 'train'")
     attack_frame = make_attack_category_frame(frame, combinations)
     return attack_frame
-    # real_frame = get_dataframe_by_attack_category(frame, "N")
-    # return pd.concat([real_frame, attack_frame])
+
 
 
 def get_casia_test_frame(dataset_name, dataset_csv_name, test_subject_number):

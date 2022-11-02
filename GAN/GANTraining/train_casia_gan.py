@@ -5,10 +5,7 @@ CASIA_FOLDERS = [
     "R1","W1","C1",
     "R2","W2","C2",
    "HR_R","HR_W","HR_C", "N1", "N2", "HR_N"
-    # "N1-N2-HR_N-W1-W2-HR_W",
-    # "N1-N2-HR_N-C1-C2-HR_C",
-    # "N1-N2-HR_N-R1-R2-HR_R",
-    # "HR_N-HR_W-HR_C-HR_R-N1-N2-R1-R2-W1-W2-C1-C2",
+
 ]
 if __name__ == "__main__":
     dataset_name = "CASIA"

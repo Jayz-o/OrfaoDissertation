@@ -1,10 +1,6 @@
 import os
-
-import pandas as pd
-
 from DatasetProcessing.DatasetCreators.CASIACreator.ray_casia_dataset_creator import DATASET_CSV_NAME
-from DatasetProcessing.KeyFrameExtraction.KFHelpers.keyframe_helper import create_kf_dataset, PATH_FEATURE_DIC_NAME, \
-    find_max_k, determine_variational_k
+from DatasetProcessing.KeyFrameExtraction.KFHelpers.keyframe_helper import create_kf_dataset
 
 if __name__ == "__main__":
     # dataset root is the path to the siw dataset containing the extracted face frames

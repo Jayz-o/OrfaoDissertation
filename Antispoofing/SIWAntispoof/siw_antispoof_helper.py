@@ -19,10 +19,6 @@ def get_siw_train_frame_func(dataset_root, dataset_csv_name, combinations, train
     else:
         frame = frame.query("usage_type == 'train'")
     attack_type_combinations = combinations[0].split("-")
-    # for comb in attack_type_combinations:
-    #     combinations.append(comb)
-    # assert len(combinations) == 1
-    # attack_type = combinations[0].split("-")
     attack_frames = []
     for attack_type in attack_type_combinations:
         if attack_type == "P" or attack_type == "R":
@@ -30,14 +26,6 @@ def get_siw_train_frame_func(dataset_root, dataset_csv_name, combinations, train
         else:
             attack_frames.append(get_dataframe_by_medium_name(frame, attack_type))
 
-    # if len(attack_type) == 1:
-    #
-    #     if attack_type[0] == "P" or attack_type[0] == "R":
-    #         attack_frame = get_dataframe_by_attack_category(frame, attack_type[0])
-    #     else:
-    #         attack_frame = make_medium_name_frame(frame, attack_type)
-    # else:
-    #     attack_frame = make_medium_name_frame(frame, attack_type)
     real_frame = get_dataframe_by_attack_category(frame, "N")
     attack_frame = pd.concat(attack_frames)
     return pd.concat([real_frame, attack_frame])
@@ -45,9 +33,6 @@ def get_siw_train_frame_func(dataset_root, dataset_csv_name, combinations, train
 def get_siw_stratified_name_list_func(attack_category):
     return convert_attack_category_to_medium_list(attack_category)
 def get_siw_stratified_name_col(combinations):
-    # if len(combinations) ==1:
-    #     if combinations[0] == "P" or combinations[0] == "R":
-    #         return "attack_category"
 
     return "medium_name"
 

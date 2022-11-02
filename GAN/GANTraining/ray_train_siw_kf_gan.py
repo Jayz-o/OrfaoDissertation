@@ -3,7 +3,7 @@ import argparse
 from GAN.GANHelpers.train_gan_helper import ray_train_gan
 from constants import PROJECT_ROOT
 
-SIW_FOLDERS = ['IP7P', 'ASUS', 'SGS8','IPP2017', 'P', 'N' ] #[  'ASUS-IPP2017-SGS8', 'IP7P-IPP2017-SGS8', 'P', 'R', 'N']#'ASUS-IP7P-SGS8', 'ASUS-IP7P-IPP2017',
+SIW_FOLDERS = ['IP7P', 'ASUS', 'SGS8','IPP2017', 'P', 'N' ]
 
 def train(folders, ngpu, kimg):
     dataset_name = "SIW_KF_90"

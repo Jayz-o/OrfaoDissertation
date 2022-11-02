@@ -1,12 +1,9 @@
 import os
 import pickle
-
-import PIL.Image
-import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
-from Helpers.image_helper import create_image_grid_from_paths, create_image_grid, obtain_file_paths
+from Helpers.image_helper import create_image_grid_from_paths, obtain_file_paths
 plt.style.use("default")
 
 def view_frames_for_folder(folder_root, file_name, title, cols):

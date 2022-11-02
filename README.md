@@ -1,18 +1,21 @@
+# NB: 
+1. Augmentation before and after the split is done for future work, along with using the HSV colour space, and training GANs for bona fide samples.
+2. The Results for the dissertation are available at:.
 # References
 * This project utilises NVIDIA's pytorch implementation of StyleGan3: https://github.com/NVlabs/stylegan3
 * This project was used as a guide: https://www.kaggle.com/raufmomin/vision-transformer-vit-fine-tuning/notebook
 # Requirements
-conda install -c pytorch faiss-gpu
 1. Create a python 3.8 virtual environment
-2. Install the requirements.txt: pip install -r requirements.txt
-3. Use the 'vgg_face_corrector.py' script to replace 'keras.engine.topology' with 'tensorflow.keras.utils' in <installation path>/keras_vggface/models.py </br>
+2. Install FAISS: conda install -c pytorch faiss-gpu
+3. Install the requirements.txt: pip install -r requirements.txt
+4. Use the 'vgg_face_corrector.py' script to replace 'keras.engine.topology' with 'tensorflow.keras.utils' in <installation path>/keras_vggface/models.py </br>
 # Notes
 1. On ubuntu, running the script in pycharm might not detect any GPUs. If this happens, launch pycharm from the terminal.
 E.g. command: pycharm-professional.
 2. **Before running any script in a terminal**, you need to export the path to the project directory. 
 E.g. enter the following command in the terminal and then run the script: </br> 
 export PYTHONPATH="${PYTHONPATH}:/path/to/your/project/root" </br>
-On my system: </br> export PYTHONPATH="${PYTHONPATH}:/home/jarred/Documents/Orfao_Masters"
+On my system: </br> export PYTHONPATH="${PYTHONPATH}:/home/jarred/Documents/OrfaoDissertation"
 3. Adjusted StyleGAN3 scripts to fix import errors:
    * Used pickle_helper to fix module paths. Used in metric_utils line 56
    * renamed torch_utils on line 226 of persistence.py.
@@ -38,5 +41,3 @@ On my system: </br> export PYTHONPATH="${PYTHONPATH}:/home/jarred/Documents/Orfa
 4. Set the number of GPUs and CPUs to use with each trial. Note to run 5 trials on your '1' GPU, set the GPUs to '0.2'.
  This is because 1.0 / 0.2 = 5 trials that will use the GPU. Similarly, set your CPUs.
 5. Run the script.
-
-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

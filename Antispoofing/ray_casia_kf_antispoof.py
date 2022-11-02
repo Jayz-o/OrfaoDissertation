@@ -1,6 +1,4 @@
 import argparse
-import os
-# os.environ["CUDA_VISIBLE_DEVICES"]="1"
 from Antispoofing.AntispoofHelpers.antispoof_helper import antispoof_setup
 
 from Antispoofing.AntispoofHelpers.hyper_perameter_helper import AUG_PERCENTAGES
@@ -143,14 +141,5 @@ if __name__ == '__main__':
                     is_gen_with_trad_aug=is_gen_with_trad_aug, mode_info=mode_info, aug_dataset_name=aug_dataset_name,
                     original_dataset_name=original_dataset_name, must_use_normal_only=must_use_normal_only,
                     use_hsv=use_hsv)
-    # antispoof_setup(dataset_name, dataset_csv_name, get_siw_train_frame_func, get_siw_protocol_frame_dic,
-    #                 get_siw_stratified_name_col, process_siw_dataset_metrics_func,
-    #                 ATTACK_TYPE_COMBINATIONS, tune_cpu, tune_gpu, epochs, train_subject_number,
-    #                 test_subject_number, tune_experiment_name, aug_percentages, num_run_repeats, is_ray=True,
-    #                 stratified_name_list_func=stratified_name_func, is_traditional=is_traditional,
-    #                 use_last_only=use_last_only, save_path=save_path, is_single_folder=is_single_folder,
-    #                 aug_after_split=aug_after_split, must_remove_normal=must_remove_normal,
-    #                 is_gen_with_trad_aug=is_gen_with_trad_aug, mode_info=mode_info, aug_dataset_name=aug_dataset_name,
-    #                 original_dataset_name=original_dataset_name, must_use_normal_only=must_use_normal_only,
-    #                 use_hsv=use_hsv)
+
 

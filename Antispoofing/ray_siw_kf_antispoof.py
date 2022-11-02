@@ -1,9 +1,7 @@
 import argparse
-import os
-# os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 from Antispoofing.AntispoofHelpers.antispoof_helper import antispoof_setup
-from Antispoofing.AntispoofHelpers.hyper_perameter_helper import start_antispoofing, AUG_PERCENTAGES
+from Antispoofing.AntispoofHelpers.hyper_perameter_helper import AUG_PERCENTAGES
 
 from Antispoofing.SIWAntispoof.siw_antispoof_helper import get_siw_train_frame_func, \
     get_siw_protocol_frame_dic, get_siw_stratified_name_col, process_siw_dataset_metrics_func, \
