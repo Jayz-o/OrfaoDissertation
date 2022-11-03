@@ -1,6 +1,7 @@
 # NB: 
 1. Augmentation before and after the split is done for future work, along with using the HSV colour space, and training GANs for bona fide samples.
-2. The Results for the dissertation are available at:.
+2. There might be slight changes in the variability results when re-run, due to the imbalance and shuffling. The variability results in the 'Results' folder have been re-run.
+3. The csv file results can be found in the 'Results' Folder. Due to size, all the results, including the predictions, can be found at the following link: https://studentujac-my.sharepoint.com/:f:/g/personal/216082337_student_uj_ac_za/EjPWDVNNEIJJtKFaWfnjJA8BDf_AkUc1WwPe5tn2kFl3RA?e=Oy4GMr.
 # References
 * This project utilises NVIDIA's pytorch implementation of StyleGan3: https://github.com/NVlabs/stylegan3
 * This project was used as a guide: https://www.kaggle.com/raufmomin/vision-transformer-vit-fine-tuning/notebook
